@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO.COM</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        main {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: aquamarine;
+            border: 0;
+            outline: 0;
+        }
+
+        .box {
+            width: 700px;
+            min-height: 500px;
+            background-color: white;
+            border-radius: 5px;
+            padding: 15px;
+        }
+
+        #item {
+            padding: 10px;
+            font-size: 20px;
+            width: 100%;
+            border: 0;
+            outline: 0;
+            display: block;
+            font-weight: bold;
+            box-shadow: 0px 2px 2px gray;
+        }
+
+        #to-do-box {
+            margin-top: 20px;
+            list-style: none;
+        }
+
+        #to-do-box li {
+            position: relative;
+            background-color: rgb(55, 54, 54);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            padding-right: 30px;
+            margin-top: 10px;
+            text-align: justify;
+        }
+
+        #to-do-box li i {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+        }
+        .done{
+            text-decoration: line-through;
+            color: black;
+            background-color: #95a5a6 !important;
+            user-select: none;
+        }
+
+        .circle {
+            width: 20px;
+            height: 20px;
+            border:1px solid #000;
+            position: absolute;
+            border-radius:15px ;
+        }
+    </style>
+ 
+</head>
+
+<body>
+    <main>
+        <div class="box">
+            <input type="text" id="item" autofocus placeholder="ENTER NAME">
+            <ul id="to-do-box">
+                
+            </ul>
+        </div>
+    </main>
+</body>
+<script>
+    const item = document.querySelector("#item");
+    const toDoBox = document.querySelector("#to-do-box");
+
+    item.addEventListener("keyup", function (event) {
+        if (event.key == "Enter") {
+            addTodo(this.value);
+            this.value = "";
+        };
+    })
+
+    const addTodo = (item) => {
+        const listItem = document.createElement("li");
+        listItem.innerHTML = `
+       ${item}
+     <i class="fas fa-times"></i>
+      `;
+      listItem.addEventListener("click",function(){
+        this.classList.toggle("done");
+      })
+      listItem.querySelector("i").addEventListener("click",function(){
+        listItem.remove();
+      })
+      toDoBox.appendChild(listItem);
+
+    }
+
+    document.onmousemove = animateCircles;
+    var colors = ['#ccc', '#6cf','#eba13a'];
+    function animateCircles(event) {
+      var circle = document.createElement("div");
+      circle.setAttribute("class", "circle");
+      document.body.appendChild(circle);
+
+      circle.style.left = event.clientX + "px"   ;
+      circle.style.top  = event.clientY + "px";
+
+     var color = colors[Math.floor(Math.random() * colors.length)]
+       circle.style.transition = "all 0.5s linear 0s";
+
+       circle.style.borderColor = color; 
+       circle.style.left = circle.offsetLeft - 20 + "px";
+       circle.style.top = circle.offsetTop - 20 + "px";
+       circle.style.width = "50px";
+       circle.style.height = "50px";
+
+       circle.style.borderWidth = "5px";
+       circle.style.opacity = 0;
+    }
+</script>
+<script>
+            
+    
+    </script>
+</html>
