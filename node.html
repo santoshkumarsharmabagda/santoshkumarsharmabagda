@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #main {
+            background-color: #dff9fb;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-wrap: wrap;
+            padding-bottom: 100px;
+        }
+        .note {
+            width: 400px;
+            height: 400px;
+            background-color: white;
+            margin: 15px;
+            margin-top: 55px;
+        }
+        .tool{
+            width: 100%;
+            background-color: #3d3d3d;
+            color: white;
+            padding: 5px;
+            display: flex;
+            justify-content: end;
+        }
+        .tool i {
+            padding: 5px;
+            cursor: pointer;
+        }
+        #addbtn {
+            position: fixed;
+            right: 10px;
+            top: 10px;
+            background-color: #3d3d3d;
+            color: white;
+            padding: 10px;
+            border: 0;
+            outline: 0;
+            border-radius: 5px;
+        }
+        .note textarea {
+            border: none;
+            width: 100%;
+            height: 100%;
+            resize: none;
+            padding: 10px;
+            font-size: 20px;
+        }
+        .note textarea:focus {
+            border: 0;
+            outline: 0;
+        }
+         .intro {
+            animation: ani 5s reverse infinite;
+         }
+        @keyframes ani {
+            0%{color: white}
+            10%{color: #ff9f1a}
+            20%{color: #67e6dc}
+            30%{color: #c56cf0}
+            40%{color: #2bcbba}
+            50%{color: #fed330}
+            60%{color: #eb3b5a}
+            70%{color: #2c2c54}
+            80%{color: #ffda79}
+            90%{color: #19f34f}
+            100%{color: #eb733b}
+            
+        }
+        .circle {
+            width: 20px;
+            height: 20px;
+            border:1px solid #000;
+            position: absolute;
+            border-radius:15px ;
+            z-index: 0;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+
+    <div style="text-align: center;padding: 10px;background-color: #ffcccc;">
+        <h1 class="intro">RNS NOTES</h1>
+    </div>
+    <button id="addbtn">
+        <i class="fa-solid fa-circle-plus"></i>
+        Add Note
+    </button>
+    <audio id="ad" style="visibility: hidden;" src="son.mp3" controls></audio>
+    <audio id="sa" style="visibility: hidden;" src="mixkit-click-error-1110.wav" controls></audio>
+    <audio id="de" style="visibility: hidden;" src="mixkit-game-click-1114.wav" controls></audio>
+    <audio id="tep" style="visibility: hidden;" src="y2mate.com - Lets Go Pubg Message Ringtone.mp3" controls></audio>
+    
+    <div id="main" >
+          <!-- <div class="note">
+              <div class="tool">
+                  <i class="fa-solid fa-floppy-disk"></i>
+                  <i class="fa-solid fa-trash"></i>
+              </div>
+              <textarea></textarea>
+          </div> -->
+    </div>
+</body>
+<script>
+    const ton = document.getElementById('ad');
+    const tepe = document.getElementById('tep');
+    const tonsa = document.getElementById('sa');
+    const tonde = document.getElementById('de');
+    const addbtn = document.querySelector('#addbtn');
+     const main = document.querySelector('#main');
+
+     const savenotes = () =>{
+        tonsa.play();
+        const notes = document.querySelectorAll(".note textarea");
+        console.log(notes);
+        const data = [];
+        notes.forEach((note) => {
+            data.push(note.value)
+        
+        })
+        // console.log(data);
+
+        if (data.length === 0) {
+            localStorage.removeItem('note');
+        }else {
+            localStorage.setItem('note', JSON.stringify(data));
+        }
+
+        localStorage.setItem("notes", JSON.stringify(data));
+     }
+    addbtn.addEventListener('click', function() {
+        addnote();
+    });
+      
+    const addnote = (text = "") => {
+        ton.play();
+        const note =document.createElement('div');
+        note.classList.add('note');
+        note.innerHTML = `
+        <div class="tool">
+                  <i style="z-index: 1;" class="save fa-solid fa-floppy-disk"></i>
+                  <i style="z-index: 1;" class="trash fa-solid fa-trash"></i>
+              </div>
+              <textarea style="z-index: 1;"  onclick= "sou('audio')">${text}</textarea>
+        `;
+        note.querySelector(".trash").addEventListener('click', function() {
+            tonde.play();
+            note.remove();
+        savenotes();
+        });
+
+        note.querySelector(".save").addEventListener('click', function() {
+            savenotes();
+        });
+
+        note.querySelector("textarea").addEventListener("focusout", function() {
+            savenotes();
+        });
+        main.appendChild(note);
+        savenotes();
+    }
+
+    (
+        function() {
+        const lsnotes = JSON.parse(localStorage.getItem("notes"));
+        // console.log(lsnotes);
+        if (lsnotes == null) {
+            addnote();
+        }else{
+            lsnotes.forEach((lsnotes)=>{
+            addnote(lsnotes);
+        })
+        }
+        
+
+        // if (lsnotes.length == 0) {
+        //     localStorage.removeItem("notes");
+        // }else{
+        //     addnote()
+        // }
+      }()
+      
+      )
+    //  circal
+    document.addEventListener('mousemove', addEventListener => {
+              var colors = ['#ccc', '#6cf','#eba13a','red','green','yellow'];
+            var circle = document.createElement("div");
+            circle.setAttribute("class", "circle");
+            document.body.appendChild(circle);
+
+            circle.style.left = `${event.pageX}px`;
+            circle.style.top  = `${event.pageY}px`;
+            // circle  = event.clientY ;
+            
+
+
+           var color = colors[Math.floor(Math.random() * colors.length)]
+             circle.style.transition = "all 0.5s linear 0s";
+
+             circle.style.borderColor = color; 
+             circle.style.left = circle.offsetLeft + 20 + "px";
+             circle.style.top = circle.offsetTop + 20 + "px";
+             circle.style.width = "20px";
+             circle.style.height = "20px";
+
+             circle.style.borderWidth = "10px";
+             circle.style.opacity = 0;
+            
+          }
+          )
+          function sou(audio) {
+            tepe.play();
+        }
+</script>
+</html>
