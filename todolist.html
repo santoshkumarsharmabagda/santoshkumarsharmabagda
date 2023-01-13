@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>todolist.com</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+    <style>
+        #bt:hover {
+            background-color: red;
+        }
+
+        .circle {
+            width: 20px;
+            height: 20px;
+            border: 1px solid #000;
+            position: absolute;
+            border-radius: 15px;
+        }
+
+        .cursor {
+            width: 30px;
+            height: 30px;
+            border: 2px solid black;
+            border-radius: 15px;
+            position: absolute;
+            transition: all 0.2s ease-in-out;
+        }
+    </style>
+    </style>
+    </style>
+</head>
+
+<body style="background-color: darkgray;" id="body">
+    <nav class="navbar navbar-expand-lg navbar-light bg-danger">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Dropdown
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled">Disabled</a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <input id="myinput" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" onkeyup="srchfu()">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div>
+        <form action="" style="padding-left: 650px;padding-top: 200px;">
+            <input type="hidden" id="id">
+            NAME: <br>
+            <input style="z-index: 1;" type="text" placeholder="NAME" id="name" value="">
+            <br> <br>
+            CLASS: <br>
+            <input style="z-index: 1;" type="text" placeholder="CLASS" id="class">
+            <br> <br>
+            ROLL-NOBER: <br>
+            <input style="z-index: 1;" type="number" placeholder="ROLL-NOBER" id="roll">
+            <br> <br>
+            <button type="button" style="margin-top: 20px;margin-left: 60px;font-size: 30px;padding: 20px;z-index: 1;"
+                id="bt" onclick="add()">
+                ADD
+            </button>
+        </form>
+    </div>
+    <div style="margin-left: 20px;" id="tabl">
+        <table style="font-size: 30px;margin-left: 30px; width: 100%;">
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Class
+                </th>
+                <th>
+                    RollNumber
+                </th>
+                <th>
+                    Del/Edit
+                </th>
+            </tr>
+            <tbody id="des">
+
+            </tbody>
+        </table>
+    </div>
+    <!-- <div class="cursor"></div> -->
+</body>
+<script>
+    let arr = [];
+
+    function add() {
+        id = document.getElementById('id').value;
+        var name1 = document.getElementById('name').value;
+        var class1 = document.getElementById('class').value;
+        var role1 = document.getElementById('roll').value;
+        if (id == '') {
+            arr.push({
+                name: name1,
+                class: class1,
+                rollnumber: role1
+            });
+
+        } else {
+            arr[id] = {
+                name: name1,
+                class: class1,
+                rollnumber: role1
+            }
+            document.getElementById('id').value = '';
+        }
+        document.getElementById('name').value = "";
+        document.getElementById('class').value = "";
+        document.getElementById('roll').value = "";
+        sa();
+
+    }
+    function sa() {
+        document.getElementById("des").innerHTML = "";
+        for (let i = 0; i < arr.length; i++) {
+            document.getElementById("des").innerHTML += '<tr><td>' + arr[i].name + '</td><td>' + arr[i].class + '</td><td>' + arr[i].rollnumber + '</td><td><input type="button" value="edit" onclick="edit(' + i + ')" / ></td><td><input type="button" value="del" onclick="del(' + i + ')" /></td></tr>';
+        }
+    }
+    function del(key) {
+        arr.splice(key, 1);
+        sa();
+    }
+    function edit(key) {
+        document.getElementById("name").value = arr[key].name;
+        document.getElementById("class").value = arr[key].class;
+        document.getElementById("roll").value = arr[key].rollnumber;
+        document.getElementById("id").value = key;
+    }
+    // Get the mouse cursor element
+    //   const cursor = document.querySelector('.cursor');
+
+    // Listen for mouse movement
+    //   document.addEventListener('mousemove', e => {
+    //     // Update the mouse cursor's position
+    //     cursor.style.top = `${e.pageY}px`;
+    //     cursor.style.left = `${e.pageX}px`;
+    //   });
+
+    // document.onmousemove = animateCircles;
+    document.addEventListener('mousemove', addEventListener => {
+        var colors = ['#ccc', '#6cf', '#eba13a', 'blue'];
+        var circle = document.createElement("div");
+        circle.setAttribute("class", "circle");
+        document.body.appendChild(circle);
+
+        circle.style.left = `${event.pageX}px`;
+        circle.style.top = `${event.pageY}px`;
+        // circle  = event.clientY ;
+
+
+
+        var color = colors[Math.floor(Math.random() * colors.length)]
+        circle.style.transition = "all 0.5s linear 0s";
+
+        circle.style.borderColor = color;
+        circle.style.left = circle.offsetLeft + 20 + "px";
+        circle.style.top = circle.offsetTop + 20 + "px";
+        circle.style.width = "20px";
+        circle.style.height = "20px";
+
+        circle.style.borderWidth = "10px";
+        circle.style.opacity = 0;
+
+    }
+    )
+</script>
+
+<script>
+
+</script>
+
+</html>
