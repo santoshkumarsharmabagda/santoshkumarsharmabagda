@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <style>
+    .main_div {
+        background-color: white;
+        width: 500px;
+        height: 600px;
+        border: none;
+        box-shadow: 2px 4px 2px 2px black;
+        text-align: center;
+        margin-left: 500px;
+        margin-top: 100px;
+        padding: 40px;
+        border-radius: 15px;
+    }
+    #img1 {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        padding: 20px;
+        border: none;
+        box-shadow: 2px 4px 2px 2px black;
+    }
+    .music_controls {
+        padding: 30px;
+        display: flex;
+        justify-content: center;
+    }
+    .anim{
+        animation:rotateplay 3s linear infinite;
+    }
+
+    @keyframes rotateplay {
+        from {transform: rotate(0deg);}
+        to {transform: rotate(360deg);}
+    }
+
+    .circle {
+            width: 20px;
+            height: 20px;
+            border:1px solid #000;
+            position: absolute;
+            border-radius:15px ;
+        }
+   </style> 
+</head>
+<body style="background-color: aliceblue;">
+    <div class="main_div">
+        <div class="music_container">
+            <h1 id="title">NEW RAP</h1>
+            <h3 id="artics">YO_YO HONEY 3.0</h3>
+            <div class="img_container">
+                <img id="img1" src="bada32.jpg" alt="images1">
+            </div>
+            <audio style="visibility: hidden;" src="bada32.mp3" controls></audio>
+             <div>
+                <img id="gif" style="width: 400px;height: 50px;visibility: hidden;" src="gif.webp" alt="">
+             </div>
+            <div>   
+                <img id="gif" style="width: 400px;height: 50px;visibility: hidden;" src="gif.webp" alt="">
+            </div>
+            <div class="music_controls" >
+                <i class="fa-solid fa-backward" id="perv" title="pervesh" style="margin-right: 70px;font-size: 30px;z-index: 1;" onclick="per()"></i>
+                <i class="fa-solid fa-play" id="play" title="play" style="margin-right: 70px;font-size: 30px;z-index: 1;"></i>
+                <i class="fa-solid fa-forward" id="next" title="nextesh" style="font-size: 30px;z-index: 1;" onclick="nex()"></i>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    const music = document.querySelector('audio'); 
+    const gif = document.getElementById('gif');
+    const image = document.querySelector('img'); 
+    const play = document.getElementById('play');
+    const artics = document.getElementById('artics');
+    const perv = document.getElementById('perv');
+    const next = document.getElementById('next');
+    const title = document.getElementById('title');
+
+    const songs = [{
+        name : 'bada32',
+        title: 'NEW RAP',
+        artics:'YO_YO HONEY 3.0'
+
+    },
+    {
+        name : 'bada42',
+        title: 'NEW2 RAP',
+        artics:'BADSHA'
+
+    },{
+        name : 'bada43',
+        title: 'NEW3 RAP',
+        artics:'BADSHA 3.0 '   
+    }
+];
+
+    let player = false;
+    const playmucik =() => {
+        player = true;
+        music.play();
+        play.classList.replace('fa-play', 'fa-pause');
+        image.classList.add('anim');
+        gif.style.visibility = 'visible';
+    }
+    const paushmucik=() => {
+        player = false;
+        music.pause();
+        play.classList.replace('fa-pause','fa-play');
+        image.classList.remove('anim');
+        gif.style.visibility = 'hidden';
+    }
+
+    play.addEventListener('click', ()=>{
+    //    if (player) {
+    //     paushmucik()
+    //    }else {
+    //     playmucik()
+    //    }
+       player?paushmucik():playmucik();
+    });
+     const lodSong = (songs) => {
+     title.textContent = songs.title;
+     artics.textContent = songs.artics;
+     music.src = songs.name +".mp3";
+     image.src = songs.name +".jpg";
+     }
+      let i =0;
+     function nex() {
+        
+         lodSong(songs[i]);
+        music.play();
+        play.classList.replace('fa-play', 'fa-pause');
+        gif.style.visibility = 'visible';
+        i++;
+
+     }
+     function per() {
+        
+         lodSong(songs[0]);
+        music.play();
+        play.classList.replace('fa-play', 'fa-pause');
+        gif.style.visibility = 'visible';
+
+     }
+
+     document.addEventListener('mousemove', addEventListener => {
+              var colors = ['#ccc', '#6cf','#eba13a','red','green','yellow'];
+            var circle = document.createElement("div");
+            circle.setAttribute("class", "circle");
+            document.body.appendChild(circle);
+
+            circle.style.left = `${event.pageX}px`;
+            circle.style.top  = `${event.pageY}px`;
+            // circle  = event.clientY ;
+            
+
+
+           var color = colors[Math.floor(Math.random() * colors.length)]
+             circle.style.transition = "all 0.5s linear 0s";
+
+             circle.style.borderColor = color; 
+             circle.style.left = circle.offsetLeft + 20 + "px";
+             circle.style.top = circle.offsetTop + 20 + "px";
+             circle.style.width = "20px";
+             circle.style.height = "20px";
+
+             circle.style.borderWidth = "10px";
+             circle.style.opacity = 0;
+            
+          }
+          )
+</script>
+</html>
