@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #res:hover {
+            box-shadow: 5px 5px 5px 10px white;
+        }
+
+        .in:hover {
+            box-shadow: 5px 5px 5px 10px white;
+        }
+
+        .bt {
+            width: 200px;
+            height: 50px;
+            font-size: 25px;
+            font-weight: bold;
+            margin-left: 260px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        .bt:hover {
+            box-shadow: 5px 5px 5px 10px white;
+        }
+        .ani{
+            animation: ani2 0.1s alternate infinite;
+        }
+        @keyframes ani2{
+      0%{ box-shadow: 10px 10px 10px 15px rgb(56, 220, 6)}
+      30%{ box-shadow: 10px 10px 10px 15px rgb(3, 226, 234)}
+      70%{ box-shadow: 10px 10px 10px 15px rgb(220, 6, 216)}
+      100%{ box-shadow: 10px 10px 10px 15px rgb(220, 6, 6)}
+     }
+    </style>
+</head>
+
+<body style="background-image: url('clackbg2.png');background-size: 100%;">
+    <div style="margin-left: 600px;">
+        <h1 id="alh" style="color: white; display: none;">ALARM START</h1>
+    </div>
+    <div style="display: flex;">
+        <div>
+            <img id="gif" style="visibility: hidden;" src="Alarm_Clock_GIF.gif" alt="">
+        </div>
+        <div>
+            <audio src="al.wav" controls style="visibility: hidden;"></audio>
+            <div id="res" style="background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);width: 500px;text-align: center;padding-top: 50px;height: 100px;font-size: 30px;color: white;text-shadow: 3px 3px 3px red;margin-left: 100px;border: none;
+    ">
+
+            </div>
+            <div id="res2">
+
+            </div>
+
+            <div class="in" id="in"
+                style="background-color: rgba(148,187,233,1);height: 200px;padding-top: 100px;width: 500px;text-align: center;border-radius: 20px;margin-left: 100px;margin-top: 30px;">
+                <input type="number" value="" id="settime" placeholder="Set-hours">
+                <br>
+                <input style="margin-top: 20px;" type="number" value="" id="settime2" placeholder="Set-minutes">
+                <br>
+                <input style="margin-top: 20px;" type="number" value="" id="settime3" placeholder="Set-seconds">
+                <br>
+            </div>
+            <button class="bt" type="button" onclick="set()">SET</button>
+        </div>
+    </div>
+</body>
+<script>
+    var continore = document.getElementById("res")
+    var continore2 = document.getElementById("in")
+    var gif = document.getElementById("gif");
+    var alh = document.getElementById("alh");
+    var audio = document.querySelector('audio');
+    setInterval(() => {
+        var d = new Date();
+        var h = d.getHours();
+        var m = d.getMinutes();
+        var s = d.getSeconds();
+        h = h < 10 ? "0" + h : h;
+        m = m < 10 ? "0" + m : m;
+        s = s < 10 ? "0" + s : s;
+        var time = h + " : " + m + " : " + s;
+        document.getElementById("res").innerHTML = time;
+
+    }, 1000)
+    function set() {
+        alh.style.display = "block";
+        setInterval(() => {
+            var use = document.getElementById("settime").value;
+            var use2 = document.getElementById("settime2").value;
+            var use3 = document.getElementById("settime3").value;
+            var h1 = Number.parseInt(use);
+            var m1 = Number.parseInt(use2);
+            var s1 = Number.parseInt(use3);
+            var d = new Date();
+            var h = d.getHours();
+            var m = d.getMinutes();
+            var s = d.getSeconds();
+            h = h < 10 ? "0" + h : h;
+            m = m < 10 ? "0" + m : m;
+            s = s < 10 ? "0" + s : s;
+            var time = h + " : " + m + " : " + s;
+            h1 = h1 < 10 ? "0" + h1 : h1;
+            m1 = m1 < 10 ? "0" + m1 : m1;
+            s1 = s1 < 10 ? "0" + s1 : s1;
+            var time2 = h1 + " : " + m1 + " : " + s1;
+            ale(time, time2);
+        }, 1000)
+    }
+    function ale(time, time2) {
+        if (time == time2) {
+            continore.setAttribute("class", "ani")
+            continore2.setAttribute("class", "ani")
+            gif.style.visibility="visible";
+            audio.play();
+
+        }
+
+    }
+</script>
+
+</html>
