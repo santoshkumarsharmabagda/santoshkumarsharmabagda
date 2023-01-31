@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>stope</title>
+  <style>
+    body {
+      background-image: url('clockbg.jfif');
+      background-size: 100%;
+      background-repeat: no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    #continore {
+      color: salmon;
+      padding: 30px;
+      border: none;
+      box-shadow: 10px 10px 10px 15px rgb(255, 128, 0);
+      
+    }
+    .ani{
+      background: linear-gradient(90deg, rgba(35,248,15,1) 0%, rgba(228,240,18,1) 35%, rgba(0,212,255,1) 100%);
+      animation: ani 0.1s alternate-reverse infinite;
+    }
+     @keyframes ani{
+      0%{ box-shadow: 10px 10px 10px 15px rgb(56, 220, 6)}
+      30%{ box-shadow: 10px 10px 10px 15px rgb(3, 226, 234)}
+      70%{ box-shadow: 10px 10px 10px 15px rgb(220, 6, 216)}
+      100%{ box-shadow: 10px 10px 10px 15px rgb(220, 6, 6)}
+     }
+    .digite {
+      font-size: 150px;
+      font-weight: bold;
+    }
+
+    .text {
+      font-size: 40px;
+      font-weight: bolder;
+    }
+
+    #btcontinore {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .btn {
+      padding: 7px 25px;
+      font-size: 15px;
+      margin: 0px 10px;
+      color: olive;
+      border: none;
+      cursor: pointer;
+
+    }
+
+    #start:hover {
+      box-shadow: 5px 5px 5px 5px aqua;
+    }
+
+    #stop:hover {
+      box-shadow: 5px 5px 5px 5px black;
+    }
+
+    #res:hover {
+      box-shadow: 5px 5px 5px 5px fuchsia;
+    }
+
+    #start {
+      background-color: palevioletred;
+      color: aqua;
+      font-size: 20px;
+    }
+
+    #stop {
+      background-color: red;
+      color: black;
+      font-size: 20px;
+    }
+
+    #res {
+      background-color: darkorange;
+      color: fuchsia;
+      font-size: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="continore">
+    <div id="time">
+      <span class="digite" id="hr">00</span>
+      <span class="text">HR</span>
+      <span class="digite" id="min">00</span>
+      <span class="text">MIN</span>
+      <span class="digite" id="seco">00</span>
+      <span class="text">SECO</span>
+      <span class="digite" id="MILI">00</span>
+    </div>
+    <div id="btcontinore">
+      <button class="btn" id="start" onclick="start()">Start</button>
+      <button class="btn" id="stop" onclick="stop()">Stop</button>
+      <button class="btn" id="res" onclick="res()">Res</button>
+    </div>
+  </div>
+  <audio style="display: none ;" src="clock-ticking-4.wav" controls></audio>
+</body>
+<script>
+  var continore = document.getElementById("continore");
+  var aud = document.querySelector('audio');
+  var hr = 0;
+  var seco = 0;
+  var min = 0;
+  var mili = 0;
+  var time = false;
+  function start() {
+    continore.setAttribute("class", "ani");
+    aud.play();
+    aud.loop = true;
+    // aud.load();
+    time = true;
+    stopwo();
+  }
+  function stop() {
+    continore.removeAttribute("class","ani");
+    time = false;
+    aud.pause();
+  }
+  function res() {
+    continore.removeAttribute("class","ani");
+    aud.pause();
+    time = false;
+    hr = 0;
+    min = 0;
+    seco = 0;
+    mili = 0;
+    document.getElementById('seco').innerHTML = "00";
+        document.getElementById('min').innerHTML = "00";
+        document.getElementById('hr').innerHTML = "00";
+        document.getElementById('MILI').innerHTML = "00";
+  }
+
+  function stopwo() {
+    if (time == true) {
+      mili = mili + 1;        
+        if (mili == 100) {
+          seco = seco + 1;
+          mili = 0;
+        } 
+        if (seco == 60) {
+          min = min + 1;
+          seco = 0;
+        }
+        if (min == 60) {
+          hr = hr + 1;
+          min = 0;
+          seco = 0;
+        }
+        document.getElementById('seco').innerHTML = seco < 10 ? "0"+seco : seco;
+        document.getElementById('min').innerHTML = min < 10 ? "0"+min : min;
+        document.getElementById('hr').innerHTML = hr < 10 ? "0"+hr : hr;
+        document.getElementById('MILI').innerHTML = mili < 10 ? "0"+mili : mili;
+        // setTimeout("stopwo()", 10);
+      }
+    }
+    setInterval("stopwo()",10);
+
+
+</script>
+
+</html>
