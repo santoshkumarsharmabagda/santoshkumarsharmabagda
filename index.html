@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .he:hover{
+            background-color: blue;
+            color: red;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body id="body">
+<div style="margin-left: 60vh;">
+    <div id="ind" style="background-color: burlywood; width: 600px; padding: 50px;margin-bottom: 40px;">
+        <input style="margin-top: 20px;margin-left: 100px" type="file" id="image-input" accept="image/*">
+        <br>
+        <input style="margin-top: 20px;margin-left: 100px" id="name" type="text" placeholder="enter name">
+        <br>
+        <input style="margin-top: 20px;margin-left: 100px" id="fname" type="text" placeholder="enter father name">
+        <br>
+        <input style="margin-top: 20px;margin-left: 100px" id="mname" type="text" placeholder="enter mother name">
+        <br>
+        <input style="margin-top: 20px;margin-left: 100px" id="idno1" type="text" placeholder="id">
+        <br>
+        <button class="he" id="imgp" style="width: 200px;margin-top: 20px;margin-left: 100px;height: 50px;">
+            SUBMIT
+        </button>
+    </div>
+    
+    <div id="data" style="background-color:#ecf0f1;width: 700px; color: white; font-weight: bold;padding: 30px;display: none;">
+        <img style="width: 200px;height: 200px;border-radius: 50%;margin-left: 250px;border: none;box-shadow: 5px 5px 5px 5px white;" id="preview-imgage">
+        <p style="margin-left: 30px;margin-top: 20px;" id="rename">NAME = </p>
+        <hr>
+        <p style="margin-left: 30px;" id="refname">FATHER-NAME = </p>
+        <hr>
+        <p style="margin-left: 30px;" id="remname">MOTHER-NAME = </p>
+        <hr>
+        <p style="margin-left: 30px;" id="idno">ID-NO. = </p>
+    </div>
+    <button id="btnp" onclick="sav()" style="margin-left:30vh ;width: 30vh;margin-top: 2vh;height: 10vh;display: none;" type="button">SAVE</button>
+</div>
+</body>
+<script>
+    var imageinput = document.getElementById("image-input");
+    var previewImgage = document.getElementById("preview-imgage");
+    var imga = document.getElementById("imgp");
+    imga.addEventListener("click", function(event) {
+        var temUrl = URL.createObjectURL(imageinput.files[0]);
+        previewImgage.setAttribute("src", temUrl);
+        console.log(temUrl);
+        var name = document.getElementById("name").value;
+        var fname = document.getElementById("fname").value;
+        var mname = document.getElementById("mname").value;
+        var idno1 = document.getElementById("idno1").value;
+        document.getElementById("rename").innerHTML += name;
+        document.getElementById("refname").innerHTML += fname;
+        document.getElementById("remname").innerHTML += mname;
+        document.getElementById("idno").innerHTML += idno1;
+        document.getElementById("data").style.display = "block";
+        document.getElementById("btnp").style.display = "block";
+        document.getElementById("ind").style.display = "none";
+    });
+
+    function sav() {
+        var body1 = document.getElementById("body").innerHTML;
+        var data1 = document.getElementById("data").innerHTML;
+        document.getElementById("body").innerHTML = data1;
+        window.print();
+        document.getElementById("body").innerHTML= body1;        
+    }
+</script>
+</html>
